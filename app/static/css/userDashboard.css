@@ -1,0 +1,302 @@
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: linear-gradient(135deg, #f4f4f4, #fffeff);
+    color: #2b0a0a;
+    /*margin-top: 10%;*/
+    display: flex;
+    flex-direction: column;  /* Ajouté pour aligner verticalement les éléments */
+    text-align: center;
+    overflow: hidden;
+    margin: 0; 
+    padding: 0; 
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Custom styles for the calendar */
+#calendar {
+    max-width: 100%;
+    margin: 0 auto;
+    height: 80vh; 
+    overflow: auto;
+}
+
+.fc-dayGridMonth-view {
+    background-color: floralwhite; 
+}
+
+/* Custom navbar styles */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    padding: 15px 10px;
+}
+
+.nav-link {
+    color: white !important; /* Ensures links are white */
+}
+
+.nav-link:hover {
+    color: aquamarine !important; /* Hover effect */
+}
+
+.navbar a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px; 
+}
+
+.container-fluid {
+    padding-left: 0 !important;  /* Remove left padding */
+    padding-right: 0 !important; /* Remove right padding */
+}
+
+.content{
+    margin: 50px; 
+}
+
+.fc-today-button {
+    position: relative;
+    left: 17px;
+    background-color: #212529;
+}
+
+.fc-daygrid {
+    height: 400px;
+}
+
+.fc-button-group {
+    position: relative;
+    left: 24px;
+    margin-bottom: 5px;
+}
+
+#fc-dom-1{
+    position: relative;
+    right: 91px;
+}
+
+.btn {
+    width: 120px;
+    padding: none; 
+}
+
+#eventForm {
+    max-width: 800px;
+    height: 1000px;
+}
+
+.modal-content {
+    height: 650px;
+}
+
+.modal-dialog {
+    max-width: 900px !important;
+}
+
+.close {
+    width: 80px;
+}
+
+#create_btn{
+    background-color: hsl(290, 44%, 49%);
+    padding: 10px;
+    width: 170px;
+}
+
+#ret_btn {
+    background-color: rebeccapurple;
+    position: relative;
+    left: 440px;
+    display: inline;
+}
+
+#viewEv {
+    height: 50%;
+    margin-top: 350px;
+}
+
+#infEv{
+    text-align: center;
+}
+
+.footer{
+    text-align:center; 
+}
+
+#butEv{
+    background-color: rgb(157, 127, 185);
+    border-color: rgb(157, 127, 185);
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.modal-footer{
+    display: flex; 
+    justify-content: center;
+}
+
+.fc-daygrid-day-bg{
+    background-color: #e7c2a1; 
+}
+
+#eventModalCont{
+    height: 1200px;
+}
+
+.badge {
+    font-size: 0.75em;
+    vertical-align: top;
+    margin-left: 5px;
+}
+
+#createEv{
+    position: relative;
+    flex: 3 3 auto;
+    padding: 3rem;
+}
+
+tbody {
+    height: 800px;
+}
+
+.fc-scrollgrid {
+    background-color: #ffffff;
+    height: 800px;
+}
+
+#searchResults {
+    display: block !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/************************************************************************************/
+#searchEventButton {
+    float: right;
+    background-color: #e4d4ed;
+    border-color: #dce8f2;
+    color: black;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    width: 150px;
+    height: 60px;
+}
+
+#searchEventButton:hover {
+    background-color: #d9c3eb;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+#searchInput {
+    margin-bottom: 20px;
+}
+
+#searchResultsEv {
+    margin-top: 20px;
+    text-align: left;
+}
+
+
+.search-result-item {
+    border: 1px solid #d1d1d1;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f5f1f7ef;
+    text-align: left;
+    margin-left: 0%;
+}
+
+.highlight {
+    color: red;
+    font-weight: bold;
+}
+
+
+.fc-button {
+    background-color: #e4d4ed; /* Couleur de fond */
+    color: black; /* Couleur du texte */
+    border: none; /* Supprime les bordures */
+    border-radius: 5px; /* Coins arrondis */
+    padding: 8px 15px; /* Marges internes */
+    font-size: 14px; /* Taille du texte */
+    cursor: pointer; /* Curseur pointeur */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre */
+    transition: all 0.3s ease; /* Animation lors du survol */
+    width: 150px;
+    height: 60px;
+}
+
+.fc-button:hover {
+    background-color: #d9c3eb; /* Couleur plus foncée au survol */
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Augmente l'ombre */
+    font-weight: bold;
+    background-color: #ece2f1;
+}
+
+.fc-button:focus {
+    outline: none; /* Supprime le contour par défaut */
+    box-shadow: 0 0 3px 2px rgba(92, 107, 192, 0.6); /* Ajoute un contour lumineux */
+}
+
+.fc-toolbar-chunk .fc-button {
+    color: white;
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.fc-toolbar-chunk:first-child {
+    display: flex;
+    flex-direction: column; /* Empile les boutons prev, next et today verticalement */
+    align-items: center; /* Centre les boutons */
+}
+
+.fc-toolbar-chunk .fc-button:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+.btn-main {
+    background-color: #e4d4ed;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 170px;
+    height: 60px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-main:hover {
+    background-color: #d9c3eb;
+}
+
+.btn-group {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    position: absolute;
+    z-index: 100;
+}
+
+
+

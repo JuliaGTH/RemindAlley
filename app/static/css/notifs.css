@@ -1,0 +1,7 @@
+.container {
+    margin-top: 50px;
+    max-height: 90vh; /* Limiter la hauteur du conteneur à 90% de la hauteur de la fenêtre */
+    overflow-y: auto; /* Permettre le défilement vertical */
+    padding: 20px; /* Ajoutez de l'espace autour du contenu */
+    border-radius: 8px; 
+}

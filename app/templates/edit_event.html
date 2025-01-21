@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier Événement</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modifyEvent.css') }}">
+    <link rel="shortcut icon" href="https://media.wired.com/photos/653bddf62692abf70732f95b/master/w_2240,c_limit/Google-Calendar-Appointments-Gear-GettyImages-1385868923.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Modifier l'événement: {{ event.title }}</h1>
+        <form method="POST" id="modifEv">
+            <div class="form-group">
+                <label for="title">Titre</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ event.title }}" {% if not is_owner %} readonly {% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="date">Date et heure de l'événement</label>
+                <input 
+                    type="datetime-local" 
+                    class="form-control" 
+                    id="date" 
+                    name="date" 
+                    value="{{ event.date.strftime('%Y-%m-%dT%H:%M') }}" 
+                    required {% if not is_owner %} readonly {% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="eventType">Type d'événement:</label>
+                {% if is_owner %}
+                    <select id="eventType" name="event_type" class="form-control">
+                        <option value="general" {% if event.event_type == 'general' %} selected {% endif %}>Général</option>
+                        <option value="marriage" {% if event.event_type == 'marriage' %} selected {% endif %}>Mariage</option>
+                        <option value="party" {% if event.event_type == 'party' %} selected {% endif %}>Fête</option>
+                        <option value="meeting" {% if event.event_type == 'meeting' %} selected {% endif %}>Réunion</option>
+                        <option value="festival" {% if event.event_type == 'festival' %} selected {% endif %}>Festival</option>
+                    </select>
+                {% else %}
+                    <input type="text" class="form-control" id="eventType" value="{{ event.event_type }}" readonly>
+                {% endif %}
+            </div>
+            <div class="form-group">
+                <label for="priority">Priorité: </label>
+                <select id="priority" name="priority" class="form-control" {% if not is_owner %} readonly {% endif %}>
+                    <option value="">Sélectionnez la priorité</option>
+                    <option value="important">Important</option>
+                    <option value="optionnel">Optionnel</option>
+                    <option value="facultatif">Facultatif</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="location">Lieu: </label>
+                <input type="text" class="form-control" id="location" name="location" {% if not is_owner %} readonly {% endif %}>
+            </div>
+            <div class="form-group">
+                <label for="budget">Budget de l'évènement (optionnelle): </label>
+                <input type="number" class="form-control" id="budget" name="budget" value="{{ event.budget }}" {% if not is_owner %} readonly {% endif %}>
+            </div>
+            <!-- Recherche des utilisateurs -->
+            <div class="form-group">
+                <label for="searchUsersEdit">Rechercher des utilisateurs:</label>
+                <input type="text" id="searchUsersEdit" class="form-control" placeholder="Nom, prénom, username ou email" {% if not is_owner %} readonly {% endif %}>
+                <input type="hidden" id="ownerId" value="{{ event.owner_id }}">
+                <ul id="searchResultsEdit" class="list-group mt-2"></ul>
+                <input type="hidden" name="invitees[]" id="invitedUsersInputEdit"  value="{{ invited_user_ids | tojson | safe }}">
+            </div>
+            <div class="form-group">
+                <label>Utilisateurs invités:</label>
+                <ul id="invitedUsersList" class="list-group mt-2"></ul>
+            </div>
+            <div class="form-group">
+                <label for="autre">Autre: </label>
+                <textarea class="form-control" id="autre" name="autre" rows="4" {% if not is_owner %} readonly {% endif %}></textarea>
+            </div>
+            <!-- Champs spécifiques -->
+            <div id="specificFields">
+                {% if event.event_type == 'general' %}
+                <div class="form-group">
+                    <label for="cost">Coût par invité (optionnelle): </label>
+                    <input type="number" class="form-control" id="cost" name="cost" value="{{ event.price_per_person}}" {% if not is_owner %} readonly {% endif %}>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description de l'évènement: </label>
+                    <textarea class="form-control" id="description" name="description" rows="4" {% if not is_owner %} readonly {% endif %}></textarea>
+                </div>
+                {% elif event.event_type == 'marriage' %}
+                <div class="form-group">
+                    <label for="theme">Thématique</label>
+                    <input type="text" class="form-control" id="theme" name="theme" {% if not is_owner %} readonly {% endif %}>
+                </div>
+                <div class="form-group">
+                    <label for="dressCode">Code vestimentaire</label>
+                    <textarea class="form-control" id="dressCode" name="dress_code" rows="4" {% if not is_owner %} readonly {% endif %}></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="menu">Menu: </label>
+                    <textarea class="form-control" id="menu" name="menu" rows="4" {% if not is_owner %} readonly {% endif %}></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="programPlan">Programme/Plan</label>
+                    <textarea class="form-control" id="programmePlan" name="programme_plan" rows="4" {% if not is_owner %} readonly {% endif %}></textarea>
+                </div>
+                {% elif event.event_type == 'party' %}
+                <div class="form-group">
+                    <label for="theme">Thématique</label>
+                    <input type="text" class="form-control" id="theme" name="theme" {% if not is_owner %} readonly {% endif %}>
+                </div>
+                {% elif event.event_type == 'meeting' %}
+                <div class="form-group">
+                    <label for="duration">Durée (heures)</label>
+                    <input type="number" class="form-control" id="duration" name="duration" min="0.5" step="0.5" {% if not is_owner %} readonly {% endif %}>
+                </div>
+                <div class="form-group">
+                    <label for="meetingType">Type de réunion</label>
+                    <input type="text" class="form-control" id="meetingType" name="meeting_type" {% if not is_owner %} readonly {% endif %}>
+                </div>
+                <div class="form-group">
+                    <label for="zoom_link">Ajout d'un lien de visio-conférence (optionnelle) 
+                        <div class="phrase_en_gras">(Lien zoom uniquement)</div>
+                    </label>
+                    <input type="text" class="form-control" id="zoom_link" name="zoom_link" placeholder="https://zoom.us/j/5551112222" {% if not is_owner %} readonly {% endif %}>
+                </div>
+                <div class="form-group">
+                    <label for="plan">Plan</label>
+                    <textarea class="form-control" id="plan" name="plan" rows="4" {% if not is_owner %} readonly {% endif %}></textarea>
+                </div>
+                {% elif event.event_type == 'festival' %}
+                <div class="form-group">
+                    <label for="theme">Thématique</label>
+                    <input type="text" class="form-control" id="theme" name="theme" {% if not is_owner %} readonly {% endif %} >
+                </div>
+                <div class="form-group">
+                    <label for="cost">Coût par invité (optionnelle): </label>
+                    <input type="number" class="form-control" id="cost" name="cost" value="{{ event.cost}}" {% if not is_owner %} readonly {% endif %}>
+                </div>    
+                <div class="form-group">
+                    <label for="plan">Planning: </label>
+                    <textarea class="form-control" id="planning" name="planning" rows="4" {% if not is_owner %} readonly {% endif %}></textarea>
+                </div>
+                {% endif %}
+            </div>
+
+            {% if not is_owner %}
+            <div class="form-group">
+                <label for="comments">Commentaires:</label>
+                <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+            </div>
+            {% endif %}
+
+            <div class="comments-section mt-4">
+                <h5>Commentaires existants :</h5>
+                <ul class="list-group">
+                    {% if event.comments %}
+                        {% for comment in event.comments.split('\n') %}
+                            <p>{{ comment }}</p>
+                        {% endfor %}
+                    {% else %}
+                        <p>Aucun commentaire pour l'instant.</p>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="modifBut">Enregistrer</button>
+        </form>
+        
+        <script src="{{ url_for('static', filename='js/validation_zoom_link.js') }}"></script>
+
+        <br>
+        <a href="{{ url_for('user.user_dashboard', user_id=current_user.id) }}" class="btn btn-secondary" id="ret_btn">Retour sur le tableau de bord</a>
+    </div>
+
+    <!-- Footer -->
+    <br>
+    <footer class="footer_ra">
+        <p>&copy; 2024 RemindAlley. Tous droits réservés.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/edit_event.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validation_zoom_link.js') }}"></script>
+    <script>
+        console.log("Rendered invited_user_ids: {{ invited_user_ids | tojson | safe }}");
+    </script>
+</body>
+</html>

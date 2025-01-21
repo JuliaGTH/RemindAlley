@@ -1,0 +1,112 @@
+/* app/static/css/index.css */
+/* fichier css pour le index.html*/
+
+body {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background: linear-gradient(135deg, #f4f4f4, #fffeff);
+    color: #2b0a0a;
+    height: 100vh;
+    /*margin-top: 10%;*/
+    display: flex;
+    flex-direction: column;  /* Ajouté pour aligner verticalement les éléments */
+    text-align: center;
+    padding: 10px;
+    overflow: hidden;
+    margin: 0; /* Remove body margin */
+    padding: 0; /* Remove body padding */
+}
+
+h1 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 280%;
+    margin-bottom: 3%;
+}
+
+h2 {
+    font-size: large;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin-bottom: 5%;
+    margin-top: -1%;
+}
+
+p {
+    font-size: 150%;
+    margin-top: 30px !important;
+}
+
+#phrase_avant_button {
+    margin-bottom: 0%;
+    margin-bottom: 30px;
+}
+
+a {
+    text-decoration: none;
+} 
+
+a:hover {
+    color: aquamarine;
+    font-weight: bolder;
+}
+
+/* Custom navbar styles */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+    padding: 15px 10px;
+}
+
+.nav-link {
+    color: white !important; /* Ensures links are white */
+}
+
+.nav-link:hover {
+    color: aquamarine !important; /* Hover effect */
+}
+
+.navbar a {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px; 
+}
+
+.fs-3 {
+    height: 100px;
+}
+
+.container-fluid {
+    padding-left: 0 !important;  /* Remove left padding */
+    padding-right: 0 !important; /* Remove right padding */
+}
+
+.content{
+    margin: 50px; 
+    margin-top: 100px;
+}
+
+.footer_ra{
+    margin-top: 350px;
+}
+
+.rendre_beau_bouton {
+    color: darkmagenta;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+.rendre_beau_bouton:hover {
+    text-decoration: underline;
+}
+
+.navbar-brand {
+    height: fit-content;
+    /*margin-right: 1rem;
+    white-space: nowrap;*/
+}
+
+#footer_idx {
+    margin-top: 0px;
+}
+

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord de l'utilisateur</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/userDashboard.css') }}">
+    <link rel="shortcut icon" href="https://media.wired.com/photos/653bddf62692abf70732f95b/master/w_2240,c_limit/Google-Calendar-Appointments-Gear-GettyImages-1385868923.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- FullCalendar Core et Day Grid Plugins -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Barre de navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand fs-3" href="{{ url_for('auth.index') }}">RemindAlley</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user.notifications') }}">
+                            Notifications
+                            {% if unread_count > 0 %}
+                                <span class="badge badge-danger">{{ unread_count }}</span>
+                            {% else %}
+                                <span class="badge badge-secondary">0</span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user.finance') }}">Finance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('user.list_events') }}">Vos évènements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('auth.logout') }}">Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="background-selector" style="margin: 1em;">
+            <label for="background-color">Choisissez la couleur de fond:</label>
+            <input type="color" id="background-color" value="#ffffff">
+        </div>
+       
+        <div class="container mt-4">
+            <h1>Bienvenue, {{ user.username }}!</h1>
+            <h2>Voici vos événements</h2>
+
+            <!-- Bouton pour ouvrir le modal de recherche d'évènement -->
+            <button class="btn btn-secondary mb-3" id="searchEventButton" data-toggle="modal" data-target="#searchEventModal">
+                Rechercher un évènement
+            </button>
+
+            <div class="view-selector">
+                <!-- Bouton principal pour afficher/masquer les boutons de vue -->
+                <button id="toggleViewButtons" class="btn-main">Changer de vue</button>
+            
+                <!-- Boutons de vue, masqués au départ -->
+                <div id="viewButtons" class="btn-group" style="display: none;">
+                    <button class="fc-button" data-view="timeGridDay">Jour</button>
+                    <button class="fc-button" data-view="timeGridWeek">Semaine</button>
+                    <button class="fc-button" data-view="dayGridMonth">Mois</button>
+                    <button class="fc-button" data-view="dayGridYear">Année</button>
+                </div>
+            </div>
+
+            <div id='calendar'></div> 
+        </div>
+
+        <!-- Modal pour la recherche d'évènement -->
+        <div class="modal fade" id="searchEventModal" tabindex="-1" role="dialog" aria-labelledby="searchEventModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document" style="max-width: 90%; height: auto;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchEventModalLabel">
+                            Rechercher un évènement par son titre ou par sa description
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="max-height: 70vh; overflow-y: auto; max-width: auto;">
+                        <input type="text" class="form-control" id="searchInput" placeholder="Rechercher un évènement par son titre ou par sa description">
+                        <div id="searchResultsEv" style="max-height: 40vh; overflow-y: auto; margin-left: auto; margin-right: auto;padding-right: 20px; text-align: center;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal pour Créer un Événement -->
+        <div class="modal" id="eventModal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+                <div class="modal-content" id="eventModalCont">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Créer un événement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="createEv">
+                        <form action="{{ url_for('user.create_event') }}" method="POST" id="eventForm">
+                            <input type="hidden" name="user_id" value="{{ user.id }}">
+
+                            <!-- Ajoutez ici le champ de sélection du type d'événement -->
+                            <div class="form-group">
+                                <label for="eventType">Type d'événement</label>
+                                <select id="eventType" name="event_type" class="form-control" required>
+                                    <option value="">Sélectionnez un type</option>
+                                    <option value="general">Général</option>
+                                    <option value="marriage">Mariage</option>
+                                    <option value="party">Fête</option>
+                                    <option value="meeting">Réunion</option>
+                                    <option value="festival">Festival</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Champs dynamiques -->
+                            <div id="dynamicFields">
+
+                            </div>
+
+                            <!-- Recherche des utilisateurs -->
+                            <div class="form-group">
+                                <label for="searchUsers">Rechercher des utilisateurs</label>
+                                <input type="text" id="searchUsers" class="form-control" placeholder="Nom, prénom, username ou email">
+                                <input type="hidden" id="ownerId" value="{{ user.id }}">
+                                <ul id="searchResults" class="list-group mt-2"></ul>
+                                <input type="hidden" name="invitees[]" id="invitedUsersInput">
+                            </div>
+                            
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary mt-3" id="create_btn">Créer l'évènement</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal pour les détails de l'événement -->
+        <div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventDetailsModalLabel">Détails de l'événement</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Titre:</strong> <span id="eventTitle"></span></p>
+                        <p><strong>Date:</strong> <span id="eventDate"></span></p>
+                        <p><strong>Type d'événement:</strong> <span id="evType"></span></p>
+                        <p><strong>Priorité:</strong> <span id="eventPriority"></span></p>
+                        <p><strong>Créateur:</strong> <span id="eventCreator"></span></p>
+                        <div class="budget-container" style="display: none;">
+                            <p><strong>Budget:</strong> <span id="eventBudget"></span></p>
+                        </div>
+                        <div id="eventSpecificDetails"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <a class="btn btn-primary" id="butEv" href="#">Modifier</a>
+                        <a class="btn btn-danger" id="deleteEventButton" href="#" data-event-id="">Supprimer</a>
+                        <a class="btn btn-danger" id="refuseEventButton" href="#" data-event-id="">Refuser</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p class="footer">&copy; 2024 RemindAlley. Tous droits réservés.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script type="application/json" id="events-data">
+        {{ events | tojson }}
+    </script>
+    <script>
+        const userId = "{{ user.id }}";
+    </script>
+    <script src="{{ url_for('static', filename='js/user_dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/recherche_event.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/validation_zoom_link.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventTypeField = document.getElementById('eventType');
+            const dynamicFields = document.getElementById('dynamicFields');
+
+            if (!eventTypeField || !dynamicFields) {
+                console.error("Required DOM elements (#eventType or #dynamicFields) not found.");
+                return; 
+            }
+
+            // Champs communs
+            const commonFields = `
+                <div class="form-group">
+                    <label for="title">Titre de l'évènement</label>
+                    <input type="text" class="form-control" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="dateTime">Date et heure de l'évènement</label>
+                    <input type="datetime-local" class="form-control" id="dateTime" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="location">Lieu: </label>
+                    <input type="text" class="form-control" id="location" name="location">
+                </div>
+                <div class="form-group">
+                    <label for="budget">Budget de l'évènement (optionnel): </label>
+                    <input type="number" class="form-control" id="budget" name="budget" min="0" step="0.01">
+                </div>
+                <div class="form-group">
+                    <label for="priority">Priorité: </label>
+                    <select id="priority" name="priority" class="form-control">
+                        <option value="">Sélectionnez la priorité</option>
+                        <option value="important">Important</option>
+                        <option value="optionnel">Optionnel</option>
+                        <option value="facultatif">Facultatif</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="autre">Autre: </label>
+                    <textarea class="form-control" id="autre" name="autre" rows="4"></textarea>
+                </div>
+            `;
+
+            // Champs dynamiques basés sur le type d'événement
+            const typeSpecificFields = {
+                general: `
+                    <div class="form-group">
+                        <label for="cost">Coût par invité (optionnelle) </label>
+                        <input type="number" class="form-control" id="cost" name="cost" min="0" step="0.01" placeholder="$">
+                    </div>
+                    <div class="form-group">
+                        <label for="description">Description de l'évènement: </label>
+                        <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                    </div>
+                `,
+                marriage: `
+                    <div class="form-group">
+                        <label for="theme">Thématique</label>
+                        <input type="text" class="form-control" id="theme" name="theme">
+                    </div>
+                    <div class="form-group">
+                        <label for="dressCode">Code vestimentaire</label>
+                        <textarea class="form-control" id="dressCode" name="dress_code" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="menu">Menu: </label>
+                        <textarea class="form-control" id="menu" name="menu" rows="4"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="programmePlan">Programme/Plan: </label>
+                        <textarea class="form-control" id="programmePlan" name="programme_plan" rows="4"></textarea>
+                    </div>
+                `,
+                party: `
+                    <div class="form-group">
+                        <label for="theme">Thématique: </label>
+                        <input type="text" class="form-control" id="theme" name="theme">
+                    </div>
+                `,
+                meeting: `
+                    <div class="form-group">
+                        <label for="duration">Durée (heures): </label>
+                        <input type="number" class="form-control" id="duration" name="duration" min="0.5" step="0.5">
+                    </div>
+                    <div class="form-group">
+                        <label for="meetingType">Type de réunion: </label>
+                        <input type="text" class="form-control" id="meetingType" name="meeting_type">
+                    </div>
+                    <div class="form-group">
+                        <label for="zoom_link">Ajout d'un lien de visio-conférence (optionnelle): </label>
+                        <input type="text" class="form-control" id="zoom_link" name="zoom_link" placeholder="https://zoom.us/j/5551112222">
+                    </div>
+                    <div class="form-group">
+                        <label for="plan">Plan: </label>
+                        <textarea class="form-control" id="plan" name="plan" rows="4"></textarea>
+                    </div>
+                `,
+                festival: `
+                    <div class="form-group">
+                        <label for="theme">Thématique: </label>
+                        <input type="text" class="form-control" id="theme" name="theme">
+                    </div>
+                    <div class="form-group">
+                        <label for="pricePerPerson">Prix par personne: </label>
+                        <input type="number" class="form-control" id="pricePerPerson" name="price_per_person" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="plan">Planning: </label>
+                        <textarea class="form-control" id="planning" name="planning" rows="4"></textarea>
+                    </div>
+                `
+            };
+
+            eventTypeField.addEventListener('change', function () {
+                const selectedType = this.value;
+                console.log("Event type selected:", selectedType);
+
+                // Efface les champs existants
+                dynamicFields.innerHTML = '';
+
+                // Ajouter des champs communs
+                dynamicFields.innerHTML = commonFields;
+
+                // Ajouter des champs spécifiques au type
+                if (typeSpecificFields[selectedType]) {
+                    dynamicFields.innerHTML += typeSpecificFields[selectedType];
+                }
+            });
+        });
+    </script>
+</body>
+</html>

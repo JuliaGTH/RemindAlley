@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/financeForm.css') }}">
+    <link rel="shortcut icon" href="https://media.wired.com/photos/653bddf62692abf70732f95b/master/w_2240,c_limit/Google-Calendar-Appointments-Gear-GettyImages-1385868923.jpg" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <h1>Gestion Financière des Événements</h1>
+        
+        {% if owned_events %}
+        <h2>Mes événements personnels</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nom de l'Événement</th>
+                    <th>Budget</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in owned_events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.budget }} $</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">Aucun événement créé.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Budget total des événements créés: {{ total_owned_budget }} $</h3>
+        {% else %}
+        <p>Aucun événement créé avec un budget valide.</p>
+        {% endif %}
+
+        {% if invited_events %}
+        <h2>Les invitations reçues</h2>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nom de l'Événement</th>
+                    <th>Budget</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in invited_events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.cost }} $</td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="2">Aucun événement auquel l'utilisateur a été invité.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Budget total des événemnts où je suis invité(e): {{ total_invited_budget }} $</h3>
+        {% else %}
+        <p>Aucun événement auquel l'utilisateur a été invité avec un budget valide.</p>
+        {% endif %}
+
+        {% if total_budget > 0 %}
+        <h2>Budget Total: {{ total_budget }} $</h2>
+        {% endif %}
+    </div>
+
+    <a href="{{ url_for('user.user_dashboard', user_id=current_user.id) }}" class="button">Retour au Tableau de Bord</a>
+
+    <!-- Footer -->
+    <br>
+    <footer class="footer_ra">
+        <p>&copy; 2024 RemindAlley. Tous droits réservés.</p>
+    </footer>
+</body>
+</html>

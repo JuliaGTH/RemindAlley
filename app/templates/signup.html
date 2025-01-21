@@ -1,0 +1,60 @@
+<!-- app/templates/signup.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> 
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/signup.css') }}">
+    <link rel="shortcut icon" href="https://media.wired.com/photos/653bddf62692abf70732f95b/master/w_2240,c_limit/Google-Calendar-Appointments-Gear-GettyImages-1385868923.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Page d'inscription</title>
+</head>
+<body>
+    <div class="container-fluid"> 
+        <h2>S'inscrire</h2>
+        <h3> Créez votre compte!</h3>
+        <form method="POST">
+            <div class="input-field">
+                <i class="fas fa-user"></i>
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+    
+            <div class="name-fields">
+                <input type="text" name="family_name" placeholder="Last Name" required>
+                <input type="text" name="name" placeholder="First Name" required>
+            </div>
+    
+            <div class="input-field">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" name="dateOfBirth" placeholder="Date Of Birth" required>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-phone"></i>
+                <input type="tel" name="phone_number" placeholder="Telephone ex: 123-456-7890" required>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-envelope"></i>
+                <input type="text" name="email" placeholder="Email ex: abc@123.com" required>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <div class="input-field">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="confirmPwd" placeholder="Confirm Password" required>
+            </div>
+            <button type="submit">S'inscrire</button>
+        </form>
+        <script src="{{ url_for('static', filename='js/formValidation.js') }}"></script>
+    
+        <!-- Footer -->
+        <br>
+        <footer>
+            <p>&copy; 2024 RemindAlley. Tous droits réservés.</p>
+        </footer>
+
+    </div> 
+</body>
+</html>

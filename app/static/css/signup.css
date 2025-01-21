@@ -1,0 +1,61 @@
+body {
+    padding-top: 70px;
+}
+
+.container-fluid {
+    width: 80%; /* Change width as desired */
+    max-width: 1200px; /* Optional: Limit max width */
+    margin: 0 auto; /* Center the container */
+}
+
+/*chagement*/
+h3 {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-weight: 300;
+    color: #5a3c7c; 
+}
+
+/*chagement*/
+.name-fields {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+/*chagement*/
+input:focus {
+    border-color: #954edc; 
+    outline: none;
+}
+
+/*chagement*/
+a {
+    margin-top: 20px;
+    text-decoration: none;
+    color: #954edc; 
+}
+
+/*chagement*/
+.input-field {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.input-field i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #888;
+}
+
+.input-field input {
+    padding-left: 30px;
+    width: 90%;
+}
+
+input::placeholder {
+    color: #aaa; 
+    opacity: 1; 
+}

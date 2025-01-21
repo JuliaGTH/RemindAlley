@@ -1,0 +1,11 @@
+# Ignorer l'environnement virtuel
+venv/
+
+# Ignorer les fichiers de bytecode Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorer les variables d'environnement
+.env
+#.instance

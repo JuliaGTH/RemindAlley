@@ -1,0 +1,47 @@
+<!-- app/templates/login.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="https://media.wired.com/photos/653bddf62692abf70732f95b/master/w_2240,c_limit/Google-Calendar-Appointments-Gear-GettyImages-1385868923.jpg" type="image/x-icon">
+    <title>Page de connexion</title>
+</head>
+<body>
+    <h2>Se connecter</h2>
+    <form method="POST">
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Se connecter</button>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+    </form>
+    <a id="mdp_oublie" href="{{ url_for('auth.forgot_password') }}">Mot de passe oublié?</a>
+    <a id="courriel_oublie" href="{{ url_for('auth.forgot_email') }}">Courriel oublié?</a>
+
+    <!-- Footer -->
+    <br>
+    <footer class="footer_ra">
+        <p>&copy; 2024 RemindAlley.Tous droits réservés.</p>
+    </footer>
+
+    <!-- JS pour masquer les messages flash après 2 secondes -->
+    <script>
+        setTimeout(function() {
+            const flashMessages = document.getElementById('flash-messages');
+            if (flashMessages) {
+                flashMessages.style.display = 'none';
+            }
+        }, 2000); // Temps en millisecondes (2000ms = 2 secondes)
+    </script>
+</body>
+</html>

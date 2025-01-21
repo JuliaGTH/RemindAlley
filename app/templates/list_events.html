@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voir une liste des événements</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/modifyEvent.css') }}">
+    <link rel="shortcut icon" href="https://media.wired.com/photos/653bddf62692abf70732f95b/master/w_2240,c_limit/Google-Calendar-Appointments-Gear-GettyImages-1385868923.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Liste de vos événements</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Lien de visio-conférence</th>
+                    <th>Budget</th>
+                    <th>Description</th>
+                    <th>Les invités</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in events %}
+                <tr>
+                    <td>{{ event.title }}</td>
+                    <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ event.zoom_link }}</td>
+                    <td>{{ event.budget }}</td>
+                    <td>{{ event.description }}</td>
+                    <td>
+                        <!-- Liste des utilisateurs invités -->
+                        <ul>
+                            {% for user in event.invited_users %}
+                                <li>{{ user.username }}</li>
+                            {% else %}
+                                <li>Aucun invité</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <br>
+        <a href="{{ url_for('user.user_dashboard', user_id=current_user.id) }}" class="btn btn-secondary" id="ret_btn">Retour sur le tableau de bord</a>
+    </div>
+    
+    <!-- Footer -->
+    <br>
+    <footer class="footer_ra">
+        <p>&copy; 2024 RemindAlley. Tous droits réservés.</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
