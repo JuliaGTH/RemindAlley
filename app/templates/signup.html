@@ -45,7 +45,11 @@
                 <i class="fas fa-lock"></i>
                 <input type="password" name="confirmPwd" placeholder="Confirm Password" required>
             </div>
-            <button type="submit">S'inscrire</button>
+            <button type="submit" class="signup-btn">S'inscrire</button>
+            <a href="{{ url_for('auth.login') }}">
+                <button type="button" class="login-btn">Se connecter</button>
+            </a>
+
         </form>
         <script src="{{ url_for('static', filename='js/formValidation.js') }}"></script>
     
