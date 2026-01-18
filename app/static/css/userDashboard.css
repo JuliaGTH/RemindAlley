@@ -60,55 +60,38 @@ h1 {
     margin: 50px; 
 }
 
-.fc-today-button {
-    position: relative;
-    left: 17px;
-    background-color: #212529;
-}
-
-.fc-daygrid {
-    height: 400px;
-}
-
-.fc-button-group {
-    position: relative;
-    left: 24px;
-    margin-bottom: 5px;
-}
-
-#fc-dom-1{
-    position: relative;
-    right: 91px;
-}
-
-.btn {
-    width: 120px;
-    padding: none; 
-}
 
 #eventForm {
     max-width: 800px;
     height: 1000px;
 }
 
-.modal-content {
-    height: 650px;
-}
+
+/*Model sizing - creer un evenement*/
 
 .modal-dialog {
-    max-width: 900px !important;
+    max-width: 900px;
 }
 
+.modal-body {
+    max-height: 1200px;
+    overflow-y: auto;
+}
+
+
+
+/*x in creer un evenement*/
 .close {
     width: 80px;
 }
 
+/*Bouton in modal creer un evenement*/
 #create_btn{
     background-color: hsl(290, 44%, 49%);
     padding: 10px;
     width: 170px;
 }
-
+/*
 #ret_btn {
     background-color: rebeccapurple;
     position: relative;
@@ -123,7 +106,7 @@ h1 {
 
 #infEv{
     text-align: center;
-}
+}*/
 
 .footer{
     margin-top: 50px;
@@ -135,6 +118,7 @@ h1 {
     border-color: rgb(157, 127, 185);
 }
 
+/*Modal Rechercher un evenement*/
 .modal-body {
     display: flex;
     flex-direction: column;
@@ -152,9 +136,10 @@ h1 {
     background-color: #e7c2a1; 
 }
 
+/*Modal Créer un événement
 #eventModalCont{
     height: 1200px;
-}
+}*/
 
 .badge {
     font-size: 0.75em;
@@ -252,7 +237,7 @@ tbody {
     box-shadow: 0 0 3px 2px rgba(92, 107, 192, 0.6); /* Ajoute un contour lumineux */
 }
 
-/********FullCalendar's internal css class (prev, next, today)**********/
+/********FullCalendar's internal css class (prev, next, today)********** FullCalendar toolbar structure/
 /*Arrow buttons + today Style*/
 .fc-toolbar-chunk .fc-button {
     color: white;
@@ -264,15 +249,24 @@ tbody {
     width: 100px;
 }
 
+.fc-today-button {
+    background-color: #212529;
+}
+
 /*Arrow buttons + today Position*/
 .fc-toolbar-chunk {
     display: flex;
-    gap: 10px;
+    gap: 20px;
+    margin-left: 20px;
 }
 
 /*Arrow buttons*/
 .fc-toolbar-chunk .fc-button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fc-toolbar-title {
+    transform: translateX(-150px);
 }
 
 
