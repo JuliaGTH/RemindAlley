@@ -56,9 +56,10 @@ h1 {
     padding-right: 0 !important; /* Remove right padding */
 }
 
+/*
 .content{
     margin: 50px; 
-}
+}*/
 
 /*actual form - creer un evenement*/
 #eventForm {
@@ -142,22 +143,29 @@ h1 {
     height: 1200px;
 }*/
 
+/*nb notifications*/
 .badge {
     font-size: 0.75em;
     vertical-align: top;
     margin-left: 5px;
 }
-
+/*
 #createEv{
     position: relative;
     flex: 3 3 auto;
     padding: 3rem;
-}
+}*/
 
+/*create event box*/
+#createEv{
+    padding: 3rem;
+}
+/*
 tbody {
     height: 800px;
-}
+}*/
 
+/*Color of day/month/year background*/
 .fc-scrollgrid {
     background-color: #ffffff;
     height: 800px;
@@ -251,7 +259,7 @@ tbody {
 }
 
 .fc-today-button {
-    background-color: #212529;
+    background-color: #273a51 !important;
 }
 
 /*Arrow buttons + today Position*/
@@ -294,11 +302,16 @@ tbody {
     background-color: #d9c3eb;
 }
 
+/*btns container inside changer de vue- Position*/
+#viewButtons {
+    position: absolute
+}
+
 /*btns inside changer de vue*/
 .btn-group {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    position: absolute;
+    margin-top: 2px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
+    
     z-index: 100;
 }
 
