@@ -60,22 +60,23 @@ h1 {
     margin: 50px; 
 }
 
-
+/*actual form - creer un evenement*/
 #eventForm {
     max-width: 800px;
-    height: 1000px;
+    max-height: 1600px;
+    overflow-y: auto;
 }
 
 
-/*Model sizing - creer un evenement*/
-
+/*The Modal - creer un evenement*/
 .modal-dialog {
     max-width: 900px;
 }
 
+/*the content*/
 .modal-body {
-    max-height: 1200px;
-    overflow-y: auto;
+    max-height: 1400px;
+    
 }
 
 
