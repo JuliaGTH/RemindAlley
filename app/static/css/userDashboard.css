@@ -6,7 +6,7 @@ body {
     display: flex;
     flex-direction: column;  /* Ajouté pour aligner verticalement les éléments */
     text-align: center;
-    overflow: hidden;
+    overflow: auto;
     margin: 0; 
     padding: 0; 
 }
@@ -19,8 +19,8 @@ h1 {
 #calendar {
     max-width: 100%;
     margin: 0 auto;
-    height: 80vh; 
-    overflow: auto;
+    /*height: 80vh; */
+    /*overflow: auto;*/
 }
 
 .fc-dayGridMonth-view {
@@ -126,6 +126,7 @@ h1 {
 }
 
 .footer{
+    margin-top: 50px;
     text-align:center; 
 }
 
@@ -224,7 +225,7 @@ tbody {
     font-weight: bold;
 }
 
-
+/***********dropdown changer de vue*************/
 .fc-button {
     background-color: #e4d4ed; /* Couleur de fond */
     color: black; /* Couleur du texte */
@@ -251,6 +252,8 @@ tbody {
     box-shadow: 0 0 3px 2px rgba(92, 107, 192, 0.6); /* Ajoute un contour lumineux */
 }
 
+/********FullCalendar's internal css class (prev, next, today)**********/
+/*Arrow buttons + today Style*/
 .fc-toolbar-chunk .fc-button {
     color: white;
     border-radius: 5px;
@@ -258,19 +261,23 @@ tbody {
     font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 100px;
 }
 
-.fc-toolbar-chunk:first-child {
+/*Arrow buttons + today Position*/
+.fc-toolbar-chunk {
     display: flex;
-    flex-direction: column; /* Empile les boutons prev, next et today verticalement */
-    align-items: center; /* Centre les boutons */
+    gap: 10px;
 }
 
+/*Arrow buttons*/
 .fc-toolbar-chunk .fc-button:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 
+
+/*******Bouton changer de vue***********/
 .btn-main {
     background-color: #e4d4ed;
     color: black;
@@ -282,15 +289,17 @@ tbody {
     font-size: 16px;
     cursor: pointer;
     transition: all 0.3s ease;
-    width: 170px;
+    width: 180px;
     height: 60px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/*Bouton changer de vue*/
 .btn-main:hover {
     background-color: #d9c3eb;
 }
 
+/*btns inside changer de vue*/
 .btn-group {
     margin-top: 10px;
     margin-bottom: 20px;
@@ -298,5 +307,19 @@ tbody {
     z-index: 100;
 }
 
+/*btns inside changer de vue*/
+.fc-button{
+    width: 180px;
+}
 
 
+/************Palette of color*************/
+.color-icon {
+    font-size: 40px;
+    cursor: pointer;
+}
+
+/* hide the real input */
+#background-color {
+    display: none;
+}
