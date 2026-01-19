@@ -33,9 +33,24 @@ h1 {
 }
 
 #ret_btn {
-    background-color: rebeccapurple;
-    position: relative;
-    left: 440px;
+    width: 25%;
+    padding: 12px;
+    background-color: #c6a4e8;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    margin: 20px auto 0 auto;
+    transition: background-color 0.3s ease;
+    display: block; 
+    text-decoration: none;
+    text-align: center;
+}
+
+#ret_btn:hover {
+    background-color: #64398c;
+    color: white;
 }
 
 #modifEv{

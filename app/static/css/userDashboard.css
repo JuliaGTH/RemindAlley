@@ -22,10 +22,10 @@ h1 {
     /*height: 80vh; */
     /*overflow: auto;*/
 }
-
+/*
 .fc-dayGridMonth-view {
     background-color: floralwhite; 
-}
+}*/
 
 /* Custom navbar styles */
 .navbar {
@@ -93,14 +93,16 @@ h1 {
     padding: 10px;
     width: 170px;
 }
-/*
-#ret_btn {
-    background-color: rebeccapurple;
-    position: relative;
-    left: 440px;
-    display: inline;
+
+/*************** Notification *****************/
+
+/*Bouton supprimer - Notification*/
+.btn-danger {
+    width: 150px;
 }
 
+
+/*
 #viewEv {
     height: 50%;
     margin-top: 350px;
@@ -156,7 +158,7 @@ h1 {
     padding: 3rem;
 }*/
 
-/*create event box*/
+/*create event box - Position*/
 #createEv{
     padding: 3rem;
 }
@@ -177,7 +179,7 @@ tbody {
     overflow: visible !important;
 }
 
-/************************************************************************************/
+/************ RECHERCHER un événement ***************/
 #searchEventButton {
     float: right;
     background-color: #e4d4ed;
@@ -219,24 +221,24 @@ tbody {
     font-weight: bold;
 }
 
-/***********dropdown changer de vue*************/
+/*********** Dropdown changer de vue - STYLE ************/
 .fc-button {
-    background-color: #e4d4ed; /* Couleur de fond */
-    color: black; /* Couleur du texte */
-    border: none; /* Supprime les bordures */
-    border-radius: 5px; /* Coins arrondis */
-    padding: 8px 15px; /* Marges internes */
-    font-size: 14px; /* Taille du texte */
-    cursor: pointer; /* Curseur pointeur */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre */
-    transition: all 0.3s ease; /* Animation lors du survol */
+    background-color: #e4d4ed; 
+    color: black; 
+    border: none; 
+    border-radius: 5px; 
+    padding: 8px 15px; 
+    font-size: 14px; 
+    cursor: pointer; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    transition: all 0.3s ease; 
     width: 150px;
     height: 60px;
 }
 
 .fc-button:hover {
-    background-color: #d9c3eb; /* Couleur plus foncée au survol */
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Augmente l'ombre */
+    background-color: #d9c3eb; 
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); 
     font-weight: bold;
     background-color: #ece2f1;
 }
@@ -246,7 +248,11 @@ tbody {
     box-shadow: 0 0 3px 2px rgba(92, 107, 192, 0.6); /* Ajoute un contour lumineux */
 }
 
-/********FullCalendar's internal css class (prev, next, today)********** FullCalendar toolbar structure/
+
+/******* FullCalendar's internal css class ****/
+/***(prev, next, today)- FullCalendar toolbar structure**/
+
+
 /*Arrow buttons + today Style*/
 .fc-toolbar-chunk .fc-button {
     color: white;
@@ -258,9 +264,6 @@ tbody {
     width: 100px;
 }
 
-.fc-today-button {
-    background-color: #273a51 !important;
-}
 
 /*Arrow buttons + today Position*/
 .fc-toolbar-chunk {
@@ -274,13 +277,19 @@ tbody {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/*Today button*/
+.fc-today-button {
+    background-color: #273a51 !important;
+}
+
+/*Title Position*/
 .fc-toolbar-title {
     transform: translateX(-150px);
 }
 
 
 
-/*******Bouton changer de vue***********/
+/************ Bouton changer de vue **********/
 .btn-main {
     background-color: #e4d4ed;
     color: black;
