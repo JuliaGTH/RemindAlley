@@ -293,11 +293,31 @@ def edit_event(event_id):
 
 
 # Route pour afficher une liste des évènements de l'utilisateur.
-@user_bp.route('/list_events', methods=['GET', 'POST'])
-@login_required 
+#@user_bp.route('/list_events', methods=['GET', 'POST'])
+#@login_required 
+#def list_events():
+  #  events = Event.query.filter_by(owner=current_user).all()
+   # return render_template('list_events.html', events=events)
+
+@user_bp.route('/list_events', methods=['GET'])
+@login_required
 def list_events():
-    events = Event.query.filter_by(owner=current_user).all()  
-    return render_template('list_events.html', events=events)
+    owned_events = Event.query.filter_by(owner=current_user).all()
+
+    invited_events = (
+        Event.query
+        .join(Event.invited_users)
+        .filter(User.id == current_user.id)
+        .all()
+    )
+
+    # Combine + remove duplicates
+    events = list({event.id: event for event in owned_events + invited_events}.values())
+
+    return render_template(
+        'list_events.html',
+        events=events
+    )
 
 
 

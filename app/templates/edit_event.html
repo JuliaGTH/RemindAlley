@@ -79,7 +79,7 @@
                 {% if event.event_type == 'general' %}
                 <div class="form-group">
                     <label for="cost">Coût par invité (optionnelle): </label>
-                    <input type="number" class="form-control" id="cost" name="cost" value="{{ event.price_per_person}}" {% if not is_owner %} readonly {% endif %}>
+                    <input type="number" class="form-control" id="cost" name="cost" value="{{ event.cost}}" {% if not is_owner %} readonly {% endif %}>
                 </div>
                 <div class="form-group">
                     <label for="description">Description de l'évènement: </label>
@@ -133,7 +133,7 @@
                 </div>
                 <div class="form-group">
                     <label for="cost">Coût par invité (optionnelle): </label>
-                    <input type="number" class="form-control" id="cost" name="cost" value="{{ event.cost}}" {% if not is_owner %} readonly {% endif %}>
+                    <input type="number" class="form-control" id="cost" name="cost" value="{{event.cost}}" {% if not is_owner %} readonly {% endif %}>
                 </div>    
                 <div class="form-group">
                     <label for="plan">Planning: </label>

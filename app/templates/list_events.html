@@ -18,7 +18,7 @@
                     <th>Titre</th>
                     <th>Date</th>
                     <th>Lien de visio-conférence</th>
-                    <th>Budget</th>
+                    <th>Budget/Coût</th>
                     <th>Description</th>
                     <th>Les invités</th>
                 </tr>
@@ -26,10 +26,18 @@
             <tbody>
                 {% for event in events %}
                 <tr>
+                    <!-- on 1 event of the events-->
                     <td>{{ event.title }}</td>
                     <td>{{ event.date.strftime('%Y-%m-%d') }}</td>
                     <td>{{ event.zoom_link }}</td>
-                    <td>{{ event.budget }}</td>
+                    <!-- Budget or Cost depending on user -->
+                    <td>
+                        {% if current_user.id == event.owner_id %}
+                            {{ event.budget }}
+                        {% else %}
+                            {{ event.cost }}
+                        {% endif %}
+                    </td>
                     <td>{{ event.description }}</td>
                     <td>
                         <!-- Liste des utilisateurs invités -->
